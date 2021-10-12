@@ -20,25 +20,69 @@ Equipment::Equipment(QWidget *parent)
 }
 void Equipment::initSignalSlot()
 {
-    
+
+    /*按键信号*/
     connect(ui.horizontalSlider_4, &QSlider::valueChanged, this, [=]() {anJianXinHaoKaiGuanSlot();});
+
+    /*驱动控制*/
     connect(ui.horizontalSlider_5, &QSlider::valueChanged, this, [=]() {quDongKongZhiKaiGuanSlot();});
+
+	/*扬弹机控制*/
     connect(ui.horizontalSlider_6, &QSlider::valueChanged, this, [=]() {kouJiKongZhiKaiGuanSlot(); });
+
+	/*扬弹机控制*/
     connect(ui.horizontalSlider_7, &QSlider::valueChanged, this, [=]() {yangDanJiKongZhiKaiGuanSlot(); });
+
+    /*导弹配电*/
     connect(ui.horizontalSlider_12, &QSlider::valueChanged, this, [=]() {daoDanPeiDianKaiGuan(); });
+
+    /*左余弹输入B4*/
     connect(ui.horizontalSlider_13, &QSlider::valueChanged, this, [=]() {zuoYuDanShuRuKaiGuanB4Slot(); });
-    connect(ui.horizontalSlider_14, &QSlider::valueChanged, this, [=]() {zuoYuDanShuRuKaiGuanC15Slot(); });
-    connect(ui.horizontalSlider_15, &QSlider::valueChanged, this, [=]() {zuoShengQiZhengKaiGuanChangSlot(); });
+
+    /*左余弹输入C15*/
+	connect(ui.horizontalSlider_14, &QSlider::valueChanged, this, [=]() {zuoYuDanShuRuKaiGuanC15Slot(); });
+
+    /*左升起正常*/
+	connect(ui.horizontalSlider_15, &QSlider::valueChanged, this, [=]() {zuoShengQiZhengKaiGuanChangSlot(); });
+
+    /*左炮选择*/
     connect(ui.horizontalSlider_20, &QSlider::valueChanged, this, [=]() {zuoPaoXuanZeKaiGuanSlot(); });
+
+    /*右炮选择*/
     connect(ui.horizontalSlider_21, &QSlider::valueChanged, this, [=]() {youPaoXuanZeKaiGuanSlot(); });
+
+    /*射击保险*/
 	connect(ui.horizontalSlider_22, &QSlider::valueChanged, this, [=]() {sheJiBaoXianKaiGuanSlot(); });
-    connect(ui.horizontalSlider_26, &QSlider::valueChanged, this, [=]() {zuoKaiMenDaoWeiKaiGuanSlot(); });
+
+    /*射击按键*/
+    connect(ui.horizontalSlider_23, &QSlider::valueChanged, this, [=]() {sheJiAnJianKaiGuanSlot(); });
+
+    /*联锁解除*/
+    connect(ui.horizontalSlider_24, &QSlider::valueChanged, this, [=]() {lianSuoJieChuKaiGuanSlot(); });
+
+    /*火炮模式*/
+    connect(ui.horizontalSlider_25, &QSlider::valueChanged, this, [=]() {huoPaoMoShiKaiGuanSlot(); });
+
+    /*左开门到位*/
+	connect(ui.horizontalSlider_26, &QSlider::valueChanged, this, [=]() {zuoKaiMenDaoWeiKaiGuanSlot(); });
+
+    /*右开门到位*/
     connect(ui.horizontalSlider_27, &QSlider::valueChanged, this, [=]() {youKaiMenDaoWeiKaiGuanSlot(); });
+
+    /*左主弹箱到位*/
     connect(ui.horizontalSlider_28, &QSlider::valueChanged, this, [=]() {zuoZhuDanXiangDaoWeiKaiGuanSlot(); });
+
+    /*右主弹箱到位*/
     connect(ui.horizontalSlider_29, &QSlider::valueChanged, this, [=]() {youZhuDanXiangDaoWeiKaiGuanSlot(); });
+
+    /*随动大误差*/
     connect(ui.horizontalSlider_30, &QSlider::valueChanged, this, [=]() {suiDongDaWuChaKaiGuanSlot(); });
+
+    /*左压弹器抬起到位*/
     connect(ui.horizontalSlider_31, &QSlider::valueChanged, this, [=]() {zuoYaDanQiTaiQiDaoWeiKaiGuanSlot(); });
-    connect(ui.horizontalSlider_32, &QSlider::valueChanged, this, [=]() {youYaDanQiTaiQiDaoWeiKaiGuanSlot(); });
+
+    /*右压弹器抬起到位*/
+	connect(ui.horizontalSlider_32, &QSlider::valueChanged, this, [=]() {youYaDanQiTaiQiDaoWeiKaiGuanSlot(); });
 }
 
 void Equipment::initSwitch()
@@ -53,7 +97,7 @@ void Equipment::initSwitch()
 
     ui.horizontalSlider_3->setMaximum(1);
     ui.horizontalSlider_3->setMinimum(0);
-
+    
     ui.horizontalSlider_4->setMaximum(1);
     ui.horizontalSlider_4->setMinimum(0);
 
@@ -203,7 +247,7 @@ void Equipment::quDongKongZhiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_5->value() == 1)
     {
         command->quDongKongZhi = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -212,7 +256,7 @@ void Equipment::quDongKongZhiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开驱动控制开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_5->value() == 0)
     {
         command->quDongKongZhi = 0;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -231,7 +275,7 @@ void Equipment::kouJiKongZhiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_6->value() == 1)
     {
         command->kouJiKongZhi = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -240,7 +284,7 @@ void Equipment::kouJiKongZhiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开扣击控制开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_6->value() == 0)
     {
         command->kouJiKongZhi = 0;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -260,7 +304,7 @@ void Equipment::yangDanJiKongZhiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_7->value() == 1)
     {
         command->yangDanJiKongZhi = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -269,7 +313,7 @@ void Equipment::yangDanJiKongZhiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开扬弹机控制开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_7->value() == 0)
     {
         command->yangDanJiKongZhi = 0;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -289,7 +333,7 @@ void Equipment::daoDanPeiDianKaiGuan()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_12->value() == 1)
     {
         command->daoDanPeiDianJianCe= 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -298,7 +342,7 @@ void Equipment::daoDanPeiDianKaiGuan()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开导弹配电检测开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_12->value() == 0)
     {
         command->daoDanPeiDianJianCe = 0;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -318,7 +362,7 @@ void Equipment::zuoYuDanShuRuKaiGuanB4Slot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_13->value() == 1)
     {
         command->zuoYuDanShuRuB4 = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -327,7 +371,7 @@ void Equipment::zuoYuDanShuRuKaiGuanB4Slot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开左余弹输入（B4)开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_13->value() == 0)
     {
         command->zuoYuDanShuRuB4 = 0;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -347,7 +391,7 @@ void Equipment::zuoYuDanShuRuKaiGuanC15Slot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_14->value() == 1)
     {
         command->zuoYuDanShuRuC15 = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -356,7 +400,7 @@ void Equipment::zuoYuDanShuRuKaiGuanC15Slot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开左余弹输入（C15)开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_14->value() == 0)
     {
         command->zuoYuDanShuRuC15 = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -376,7 +420,7 @@ void Equipment::zuoShengQiZhengKaiGuanChangSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_15->value() == 1)
     {
         command->zuoShengQiZhengChang = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -385,7 +429,7 @@ void Equipment::zuoShengQiZhengKaiGuanChangSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开左升起正常开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_15->value() == 0)
     {
         command->zuoShengQiZhengChang = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -405,7 +449,7 @@ void Equipment::zuoPaoXuanZeKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_20->value() == 1)
     {
         command->zuoPaoXuanZe = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -414,7 +458,7 @@ void Equipment::zuoPaoXuanZeKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开左炮选择开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_20->value() == 0)
     {
         command->zuoPaoXuanZe = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -434,7 +478,7 @@ void Equipment::youPaoXuanZeKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_21->value() == 1)
     {
         command->youPaoXuanZe = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -443,7 +487,7 @@ void Equipment::youPaoXuanZeKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开右炮选择开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_21->value() == 0)
     {
         command->youPaoXuanZe = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -464,7 +508,7 @@ void Equipment::sheJiBaoXianKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_22->value() == 1)
     {
         command->sheJiBaoXian = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -473,7 +517,7 @@ void Equipment::sheJiBaoXianKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开射击保险开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_22->value() == 0)
     {
         command->sheJiBaoXian = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -493,7 +537,7 @@ void Equipment::sheJiAnJianKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_23->value() == 1)
     {
         command->sheJiAnJian = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -502,7 +546,7 @@ void Equipment::sheJiAnJianKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开射击按键开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_23->value() == 0)
     {
         command->sheJiAnJian = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -522,7 +566,7 @@ void Equipment::lianSuoJieChuKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_24->value() == 1)
     {
         command->lianSuoJieChu = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -531,7 +575,7 @@ void Equipment::lianSuoJieChuKaiGuanSlot()
     	ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开联锁解除开关\n"));
     	ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_24->value() == 0)
     {
         command->lianSuoJieChu = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -552,7 +596,7 @@ void Equipment::huoPaoMoShiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_25->value() == 1)
     {
         command->huoPaoMoShi = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -561,7 +605,7 @@ void Equipment::huoPaoMoShiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开火炮模式开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_25->value() == 0)
     {
         command->huoPaoMoShi = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -581,7 +625,7 @@ void Equipment::zuoKaiMenDaoWeiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_26->value() == 1)
     {
         command->zuoKaiMenDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -590,7 +634,7 @@ void Equipment::zuoKaiMenDaoWeiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开左开门到位开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_26->value() == 0)
     {
         command->zuoKaiMenDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -610,7 +654,7 @@ void Equipment::youKaiMenDaoWeiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_27->value() == 1)
     {
         command->youKaiMenDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -619,7 +663,7 @@ void Equipment::youKaiMenDaoWeiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开右开门到位开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_27->value() == 0)
     {
         command->youKaiMenDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -639,7 +683,7 @@ void Equipment::zuoZhuDanXiangDaoWeiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_28->value() == 1)
     {
         command->zuoZhuDanXiangDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -648,7 +692,7 @@ void Equipment::zuoZhuDanXiangDaoWeiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开左主弹箱到位开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_28->value() == 0)
     {
         command->zuoZhuDanXiangDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -668,7 +712,7 @@ void Equipment::youZhuDanXiangDaoWeiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_29->value() == 1)
     {
         command->youZhuDanXiangDaoWei=1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -677,7 +721,7 @@ void Equipment::youZhuDanXiangDaoWeiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开右主弹箱到位开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_29->value() == 0)
     {
         command->youZhuDanXiangDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -697,7 +741,7 @@ void Equipment::suiDongDaWuChaKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_30->value() == 1)
     {
         command->suiDongDaWuCha = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -706,7 +750,7 @@ void Equipment::suiDongDaWuChaKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开随动大误差开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_30->value() == 0)
     {
         command->suiDongDaWuCha = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -726,7 +770,7 @@ void Equipment::zuoYaDanQiTaiQiDaoWeiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_31->value() == 1)
     {
         command->zuoYaDanQiTaiQiDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -735,7 +779,7 @@ void Equipment::zuoYaDanQiTaiQiDaoWeiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开左压弹器抬起到位开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_31->value() == 0)
     {
         command->zuoYaDanQiTaiQiDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -755,7 +799,7 @@ void Equipment::youYaDanQiTaiQiDaoWeiKaiGuanSlot()
     command->packType = 0x01;
 
     /*发送*/
-    if (ui.horizontalSlider_4->value() == 1)
+    if (ui.horizontalSlider_32->value() == 1)
     {
         command->youYaDanQiTaiQiDaoWei=1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
@@ -764,7 +808,7 @@ void Equipment::youYaDanQiTaiQiDaoWeiKaiGuanSlot()
         ui.textBrowser->append(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz") + " " + QString::fromLocal8Bit("打开右压弹器抬起到位开关\n"));
         ui.textBrowser->repaint();
     }
-    if (ui.horizontalSlider_4->value() == 0)
+    if (ui.horizontalSlider_32->value() == 0)
     {
         command->youYaDanQiTaiQiDaoWei = 1;
         unsigned char checksum = getChecksum((unsigned char*)command, 32);
